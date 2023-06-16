@@ -30,17 +30,22 @@ interface StatesProps {
 
 const propertyTypes = [
   { title: "HOUSE", name: "House", value: 1 },
-  { title: "FLAT", name: "Flat", value: 2 },
-  { title: "PLOT", name: "Plot", value: 3 },
-  { title: "FARMLAND", name: "Farmland", value: 4 },
-  { title: "OFFICE", name: "Office", value: 5 },
+  { title: "UNIT", name: "Apartment/Unit", value: 2 },
+  { title: "VILLA", name: "Villa", value: 3 },
+  { title: "ACERAGE", name: "Acerage", value: 4 },
+  { title: "BLOCK_OF_UNITS", name: "Block Of Units", value: 5 },
+  { title: "TOWNHOUSE", name: "Townhouse", value: 6 },
+  { title: "LAND", name: "Land", value: 7 },
+  { title: "RURAL", name: "Rural", value: 8 },
+  { title: "RETIREMENT_LIVING", name: "Retirement Living", value: 9 },
 ];
+
 const landSizeUnits = [
   { title: "SQUARE_METERS", name: "Square Meters", value: 1 },
-  { title: "SQUARE_YARDS", name: "Square Yards", value: 2 },
-  { title: "SQUARE_FOOTS", name: "Square Foots", value: 3 },
-  { title: "SQUARE_KMS", name: "Square Kms", value: 4 },
+  { title: "ACRES", name: "Acres", value: 2 },
+  { title: "HECTARES", name: "Hectares", value: 3 },
 ];
+
 
 export default function Property() {
   const [values, setValues] = useState<ValuesProps>({
@@ -69,7 +74,7 @@ export default function Property() {
   }, []);
 
   const getStateList = async () => {
-    const { data } = await axios.get(`https://llm.grayphite.com/state/`);
+    const { data } = await axios.get(`http://localhost:8000/state/`);
     setStateList(data);
   };
 
@@ -147,7 +152,7 @@ export default function Property() {
     };
 
     const response = await axios.post(
-      `https://llm.grayphite.com/property/`,
+      `http://localhost:8000/property`,
       data
     );
 
