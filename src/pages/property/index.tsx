@@ -3,52 +3,16 @@ import React, { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
 import Seo from "@/components/Seo";
 import { FaBath, FaBed, FaCarAlt } from "react-icons/fa";
-import axios from "axios";
-
-interface ValuesProps {
-  unit: string;
-  street_number: string;
-  street_name: string;
-  suburb: string;
-  state: string;
-  country: string;
-  postcode: string;
-  include_address_in_copy: boolean;
-  property_type: number;
-  land_size: number;
-  land_size_unit: number;
-  target_market: string;
-  features: string;
-}
-
-interface StatesProps {
-  id: number;
-  name: string;
-  country: string;
-  acronym: string;
-}
-
-const propertyTypes = [
-  { title: "HOUSE", name: "House", value: 1 },
-  { title: "UNIT", name: "Apartment/Unit", value: 2 },
-  { title: "VILLA", name: "Villa", value: 3 },
-  { title: "ACERAGE", name: "Acerage", value: 4 },
-  { title: "BLOCK_OF_UNITS", name: "Block Of Units", value: 5 },
-  { title: "TOWNHOUSE", name: "Townhouse", value: 6 },
-  { title: "LAND", name: "Land", value: 7 },
-  { title: "RURAL", name: "Rural", value: 8 },
-  { title: "RETIREMENT_LIVING", name: "Retirement Living", value: 9 },
-];
-
-const landSizeUnits = [
-  { title: "SQUARE_METERS", name: "Square Meters", value: 1 },
-  { title: "ACRES", name: "Acres", value: 2 },
-  { title: "HECTARES", name: "Hectares", value: 3 },
-];
-
+import { getStateList, saveProperty } from "@/services/Api";
+import {
+  PropertyProps,
+  StatesProps,
+  propertyTypes,
+  landSizeUnits,
+} from "@/constant/types";
 
 export default function Property() {
-  const [values, setValues] = useState<ValuesProps>({
+  const [values, setValues] = useState<PropertyProps>({
     unit: "",
     street_number: "",
     street_name: "",
@@ -67,14 +31,21 @@ export default function Property() {
   const [bedrooms, setBedrooms] = useState(0);
   const [bathrooms, setBathrooms] = useState(0);
   const [parkingSpaces, setParkingSpaces] = useState(0);
-  const [stateList, setStateList] = useState<[StatesProps]>([]);
+  const [stateList, setStateList] = useState<[StatesProps]>([
+    {
+      acronym: "",
+      country: "",
+      id: 0,
+      name: "0",
+    },
+  ]);
 
   useEffect(() => {
-    getStateList();
+    onGetStateList();
   }, []);
 
-  const getStateList = async () => {
-    const { data } = await axios.get(`http://localhost:8000/state/`);
+  const onGetStateList = async () => {
+    const { data } = await getStateList();
     setStateList(data);
   };
 
@@ -151,12 +122,9 @@ export default function Property() {
       parking_spaces: parkingSpaces,
     };
 
-    const response = await axios.post(
-      `http://localhost:8000/property`,
-      data
-    );
+    const { data: responseData } = await saveProperty(data);
 
-    alert(`Success: ${JSON.stringify(response.data)}`);
+    alert(`Success: ${JSON.stringify(responseData)}`);
   };
 
   return (
