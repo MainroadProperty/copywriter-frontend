@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import Layout from "@/components/layout/Layout";
 import Seo from "@/components/Seo";
 import { getProperties } from "@/services/Api";
 import { PropertyProps } from "@/constant/types";
 import { Loading } from "@/components/Loading";
+import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
 export default function Property() {
   const [loading, setLoading] = useState(false);
@@ -26,6 +26,9 @@ export default function Property() {
     },
   ]);
 
+  const [sortColumn, setSortColumn] = useState("id");
+  const [sortDirection, setSortDirection] = useState("asc"); // "asc" or "desc"
+
   useEffect(() => {
     onGetPropertyList();
   }, []);
@@ -36,6 +39,28 @@ export default function Property() {
     setPropertyList(data);
     setLoading(false);
   };
+
+  const handleSortChange = (column: string) => {
+    if (column === sortColumn) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortColumn(column);
+      setSortDirection("asc");
+    }
+  };
+
+  const sortedPropertyList = [...propertyList].sort((a, b) => {
+    const aValue = a[sortColumn as keyof PropertyProps];
+    const bValue = b[sortColumn as keyof PropertyProps];
+
+    if (typeof aValue === "undefined" || typeof bValue === "undefined") {
+      return 0;
+    }
+
+    if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
+    if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
+    return 0;
+  });
 
   return (
     <Layout>
@@ -52,44 +77,186 @@ export default function Property() {
 
             <div className="flex flex-col">
               {loading ? (
-                <div className="w-full flex justify-center p-20">
+                <div className="flex w-full justify-center p-20">
                   <Loading />
                 </div>
               ) : (
                 <table className="min-w-full text-left text-sm font-light">
                   <thead className="border-b font-medium">
                     <tr>
-                      <th scope="col" className="px-6 py-3">
-                        #
+                      <th
+                        scope="col"
+                        className="px-6 py-3"
+                        onClick={() => handleSortChange("id")}
+                      >
+                        <div className="flex items-center">
+                          #
+                          {sortColumn === "id" ? (
+                            <span className="ml-1">
+                              {sortDirection === "asc" ? (
+                                <FaChevronUp className="ml-2" size={10} />
+                              ) : (
+                                <FaChevronDown className="ml-2" size={10} />
+                              )}
+                            </span>
+                          ) : (
+                            <FaChevronUp className="ml-2" size={10} />
+                          )}
+                        </div>
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        Client
+                      <th
+                        scope="col"
+                        className="px-6 py-3"
+                        onClick={() => handleSortChange("client")}
+                      >
+                        <div className="flex items-center">
+                          Client
+                          {sortColumn === "client" ? (
+                            <span className="ml-1">
+                              {sortDirection === "asc" ? (
+                                <FaChevronUp className="ml-2" size={10} />
+                              ) : (
+                                <FaChevronUp className="ml-2" size={10} />
+                              )}
+                            </span>
+                          ) : (
+                            <FaChevronUp className="ml-2" size={10} />
+                          )}
+                        </div>
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        Unit
+                      <th
+                        scope="col"
+                        className="px-6 py-3"
+                        onClick={() => handleSortChange("unit")}
+                      >
+                        <div className="flex items-center">
+                          Unit
+                          {sortColumn === "unit" ? (
+                            <span className="ml-1">
+                              {sortDirection === "asc" ? (
+                                <FaChevronUp className="ml-2" size={10} />
+                              ) : (
+                                <FaChevronUp className="ml-2" size={10} />
+                              )}
+                            </span>
+                          ) : (
+                            <FaChevronUp className="ml-2" size={10} />
+                          )}
+                        </div>
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        Street Number
+
+                      <th
+                        scope="col"
+                        className="px-6 py-3"
+                        onClick={() => handleSortChange("street_number")}
+                      >
+                        <div className="flex items-center">
+                          Street Number
+                          {sortColumn === "street_number" ? (
+                            <span className="ml-1">
+                              {sortDirection === "asc" ? (
+                                <FaChevronUp className="ml-2" size={10} />
+                              ) : (
+                                <FaChevronUp className="ml-2" size={10} />
+                              )}
+                            </span>
+                          ) : (
+                            <FaChevronUp className="ml-2" size={10} />
+                          )}
+                        </div>
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        Street Name
+
+                      <th
+                        scope="col"
+                        className="px-6 py-3"
+                        onClick={() => handleSortChange("street_name")}
+                      >
+                        <div className="flex items-center">
+                          Street Name
+                          {sortColumn === "street_name" ? (
+                            <span className="ml-1">
+                              {sortDirection === "asc" ? (
+                                <FaChevronUp className="ml-2" size={10} />
+                              ) : (
+                                <FaChevronUp className="ml-2" size={10} />
+                              )}
+                            </span>
+                          ) : (
+                            <FaChevronUp className="ml-2" size={10} />
+                          )}
+                        </div>
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        Suburb
+
+                      <th
+                        scope="col"
+                        className="px-6 py-3"
+                        onClick={() => handleSortChange("suburb")}
+                      >
+                        <div className="flex items-center">
+                          Suburb
+                          {sortColumn === "suburb" ? (
+                            <span className="ml-1">
+                              {sortDirection === "asc" ? (
+                                <FaChevronUp className="ml-2" size={10} />
+                              ) : (
+                                <FaChevronUp className="ml-2" size={10} />
+                              )}
+                            </span>
+                          ) : (
+                            <FaChevronUp className="ml-2" size={10} />
+                          )}
+                        </div>
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        State
+
+                      <th
+                        scope="col"
+                        className="px-6 py-3"
+                        onClick={() => handleSortChange("state")}
+                      >
+                        <div className="flex items-center">
+                          State
+                          {sortColumn === "state" ? (
+                            <span className="ml-1">
+                              {sortDirection === "asc" ? (
+                                <FaChevronUp className="ml-2" size={10} />
+                              ) : (
+                                <FaChevronUp className="ml-2" size={10} />
+                              )}
+                            </span>
+                          ) : (
+                            <FaChevronUp className="ml-2" size={10} />
+                          )}
+                        </div>
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        Postcode
+
+                      <th
+                        scope="col"
+                        className="px-6 py-3"
+                        onClick={() => handleSortChange("postcode")}
+                      >
+                        <div className="flex items-center">
+                          Postcode
+                          {sortColumn === "postcode" ? (
+                            <span className="ml-1">
+                              {sortDirection === "asc" ? (
+                                <FaChevronUp className="ml-2" size={10} />
+                              ) : (
+                                <FaChevronUp className="ml-2" size={10} />
+                              )}
+                            </span>
+                          ) : (
+                            <FaChevronUp className="ml-2" size={10} />
+                          )}
+                        </div>
                       </th>
+
                       <th scope="col" className="px-6 py-3">
                         Action
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {propertyList.map((property) => (
+                    {sortedPropertyList.map((property) => (
                       <tr className="border-b text-gray-800">
                         <td className="whitespace-nowrap px-6 py-3 font-medium">
                           {property.id}
