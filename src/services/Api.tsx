@@ -14,5 +14,9 @@ export const saveProperty = async (data: Object) => {
 };
 
 export const getProperties = async () => {
-  return await axios.get(`${baseURL}/property/`, config);
+  return await axios.get(`${baseURL}/property/`);
+};
+
+export const getPropertyDetails = async (id: any) => {
+  return await axios.get(`${baseURL}/property/?id=${id}`);
 };

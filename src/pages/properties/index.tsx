@@ -5,6 +5,7 @@ import { getProperties } from "@/services/Api";
 import { PropertyProps } from "@/constant/types";
 import { Loading } from "@/components/Loading";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import Link from "next/link";
 
 export default function Property() {
   const [loading, setLoading] = useState(false);
@@ -299,7 +300,8 @@ export default function Property() {
                           </span>
 
                           <span className="ml-3 hidden sm:block">
-                            <button
+                            <Link
+                              href={`/properties/${property.id}`}
                               type="button"
                               className="inline-flex items-center rounded-md bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                             >
@@ -313,7 +315,7 @@ export default function Property() {
                                 <path d="M11.603 7.963a.75.75 0 00-.977 1.138 2.5 2.5 0 01.142 3.667l-3 3a2.5 2.5 0 01-3.536-3.536l1.225-1.224a.75.75 0 00-1.061-1.06l-1.224 1.224a4 4 0 105.656 5.656l3-3a4 4 0 00-.225-5.865z" />
                               </svg>
                               View
-                            </button>
+                            </Link>
                           </span>
                         </td>
                       </tr>

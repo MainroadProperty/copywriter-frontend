@@ -15,6 +15,27 @@ export interface PropertyProps {
   features: string;
 }
 
+export interface PropertyPropsResponse {
+  id?: number;
+  unit: string;
+  street_number: string;
+  street_name: string;
+  suburb: string;
+  state: string;
+  country: string;
+  postcode: string;
+  include_address_in_copy: boolean;
+  property_type: number;
+  land_size: number;
+  land_size_unit: number;
+  target_market: string;
+  features: string;
+  description: Array<{}>;
+  beds: number;
+  baths: number;
+  parking_spaces: number;
+}
+
 export interface StatesProps {
   id: number;
   name: string;
