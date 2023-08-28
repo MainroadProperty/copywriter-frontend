@@ -53,53 +53,19 @@ export default function PropertyDetails() {
             {propertyDetails?.unit} - {propertyDetails?.street_number} -{" "}
             {propertyDetails?.street_name}
           </p>
+
           <h1 className="mt-8 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Description
           </h1>
 
-          {propertyDetails?.description.map((des) => (
+          {propertyDetails?.description.map((des: any) => (
             <p
               className="mt-8 space-y-8 text-gray-900"
-              dangerouslySetInnerHTML={{ __html: des }}
-            ></p>
+              style={{ whiteSpace: "pre-line" }}
+            >
+              {des}
+            </p>
           ))}
-
-          <h1 className="mt-10 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Features
-          </h1>
-
-          <p className="mt-8 space-y-8 text-gray-900">
-            {propertyDetails?.features}
-          </p>
-
-          <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="flex flex-col-reverse">
-              <dt className="text-base leading-7 text-gray-900">Land Size</dt>
-              <dd className="text-2xl font-bold leading-9 tracking-tight text-indigo-500">
-                {propertyDetails?.land_size}
-              </dd>
-            </div>
-            <div className="flex flex-col-reverse">
-              <dt className="text-base leading-7 text-gray-900">Bedrooms</dt>
-              <dd className="text-2xl font-bold leading-9 tracking-tight text-indigo-500">
-                {propertyDetails?.beds}
-              </dd>
-            </div>
-            <div className="flex flex-col-reverse">
-              <dt className="text-base leading-7 text-gray-900">Bathrooms</dt>
-              <dd className="text-2xl font-bold leading-9 tracking-tight text-indigo-500">
-                {propertyDetails?.baths}
-              </dd>
-            </div>
-            <div className="flex flex-col-reverse">
-              <dt className="text-base leading-7 text-gray-900">
-                Parking Spaces
-              </dt>
-              <dd className="text-2xl font-bold leading-9 tracking-tight text-indigo-500">
-                {propertyDetails?.parking_spaces}
-              </dd>
-            </div>
-          </dl>
 
           {/* <ul role="list" className="mt-8 space-y-8 text-gray-900">
           <li className="flex gap-x-3">
